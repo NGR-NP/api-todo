@@ -1,10 +1,8 @@
 const UserModel = require("../models/user.model");
 const ERROR = require("../utils/ERROR");
-
-// Get a user by ID
-async function getUserById(req, res, next) {
+exports.getUserById = async (req, res, next) => {
+  const id = req.userId;
   try {
-    const id = req.userId;
     const user = await UserModel.findById(id).select("-password").lean();
     if (!user) {
       return next(ERROR(404, "User not found"));
@@ -13,12 +11,10 @@ async function getUserById(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
-
-// Update a user
-async function updateUser(req, res, next) {
+};
+exports.updateUser = async (req, res, next) => {
+  const id = req.userId;
   try {
-    const id = req.userId;
     const updates = req.body;
     const updatedUser = await UserModel.findByIdAndUpdate(id, updates, {
       new: true,
@@ -31,12 +27,10 @@ async function updateUser(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
-
-// Delete a user
-async function deleteUser(req, res, next) {
+};
+exports.deleteUser = async (req, res, next) => {
+  const id = req.userId;
   try {
-    const id = req.userId;
     const deletedUser = await UserModel.findByIdAndRemove(id);
     if (!deletedUser) {
       return next(ERROR(404, "User not found"));
@@ -45,10 +39,4 @@ async function deleteUser(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
-
-module.exports = {
-  getUserById,
-  updateUser,
-  deleteUser,
 };

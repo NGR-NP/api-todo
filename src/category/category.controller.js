@@ -78,9 +78,14 @@ exports.deleteCategory = async (req, res, next) => {
 exports.getTodoCountsByCategory = async (req, res, next) => {
   try {
     const categories = await TodoModel.aggregate([
+      // {
+      //   $match: {
+      //     user: req.userId,
+      //   },
+      // },
       {
         $lookup: {
-          from: "categorys", // collection name of categories
+          from: "categorys",
           localField: "category",
           foreignField: "_id",
           as: "category",

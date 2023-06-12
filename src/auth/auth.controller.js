@@ -68,7 +68,7 @@ const login = async (req, res, next) => {
         email: userFound.email,
       },
       JWT_SEC,
-      { expiresIn: "2m" }
+      { expiresIn: "20m" }
     );
 
     const {_id, firstName, lastName, img } = userFound;

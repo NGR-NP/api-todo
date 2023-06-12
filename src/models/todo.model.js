@@ -17,14 +17,22 @@ const TodoSchema = new mongoose.Schema(
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, "choose due date!!"],
     },
+    status:{
+      type: String,
+      enum: ["completed", "expired", "not completed"]
+      ,default: "not completed" 
+    }
   },
+  
   {
     timestamps: true,
   }
 );
+TodoSchema.index({ task: "text" });
+TodoSchema.index({ date: -1 });
 const TodoModel = mongoose.model("Todos", TodoSchema);
 
 module.exports = TodoModel;
